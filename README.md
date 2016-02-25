@@ -1,4 +1,5 @@
 Seguem os tipos, campos e descrições da ficha do **Pedidos:**
+
 Coluna/Campo | Tipo/Opções | Descrição
 ------------ | ------------- |------------ 
 Nome Cliente | varchar(50) | Nome do cliente
