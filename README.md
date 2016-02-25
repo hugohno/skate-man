@@ -235,6 +235,8 @@ Logradouro | varchar(70) | Endereço do cliente
 
 Seguem os tipos, campos e descrições da ficha de **Acessos:**
 
+Coluna/Campo | Tipo/Opções | Descrição
+------------ | ------------- |------------ 
 Method | Opções: ReportView, OrderUpdate, ProductManagement, NfeOperation, UtilityExecute. | Indica o método
 Nome | varchar(80) | Indica o nome do relatório, utilitário.
 Data execução | datetime | Data/hora de início do processamento
