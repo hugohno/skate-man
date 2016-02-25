@@ -99,7 +99,6 @@ Campo 2 | varchar(100) | Campo adicional 2
 Campo 3 | varchar(100) | Campo adicional 3
 
 Seguem os tipos, campos e descrições da ficha do **Pedidos:**
-
 Coluna/Campo | Tipo/Opções | Descrição
 ------------ | ------------- |------------ 
 Nome Cliente | varchar(50) | Nome do cliente
@@ -122,8 +121,7 @@ Obs curta | varchar(10) | Texto de apoio sobre o pedido, para uso interno da loj
 Entregue Em | smalldatetime | Data de entrega do pedido ao destinatário pela transportadora
 Objeto SEDEX | varchar(13) | Código fornecido pelos Correios para acompanhamento de remessas
 MoipCodigo | varchar(12) | Código da transação retornada pelo MoIP. Ex: 11202666
-MoipStatus | tinyint | Status da transação retornada pelo MoIP. Ex: 5 Os valores possíveis para o campo MoipStatus: (1) Autorizado: Pagamento autorizado.-(2) Iniciado: Pagamento foi iniciado, porém sem confirmação de finalização até o momento-(3) BoletoImpresso: Boleto visualizado pelo cliente-(4) Concluído: Pagamento creditado em conta e disponível para saque.
-(5) Cancelado: Pagamento foi cancelado-(6) EmAnalise: Pagamento em análise de risco-(7) Estornado: Pagamento foi estornado-(8) EmRevisao: Pagamento em revisão pelo Moip-(9)  Reembolsado: Pagamento foi reembolsado
+MoipStatus | tinyint | Status da transação retornada pelo MoIP. Ex: 5 Os valores possíveis para o campo MoipStatus: (1) Autorizado: Pagamento autorizado. - (2) Iniciado: Pagamento foi iniciado, porém sem confirmação de finalização até o momento (3) BoletoImpresso: Boleto visualizado pelo cliente (4) Concluído: Pagamento creditado em conta e disponível para saque. (5) Cancelado: Pagamento foi cancelado (6) EmAnalise: Pagamento em análise de risco (7) Estornado: Pagamento foi estornado (8) EmRevisao: Pagamento em revisão pelo Moip (9)  Reembolsado: Pagamento foi reembolsado
 AkatusID | varchar(36) | O ID da transação na Akatus. Ex: cfbda716-906b-4f69-83f8-4cdae19cb3ee
 AkatusStatus | varchar(50) | Status da transação na Akatus. Ex: Cancelado Os valores possíveis para o campo AkatusStatus: Aguardando Pagamento, Em Análise, Aprovado e Cancelado.
 ChangeFlagAPI | tinyint | Utilizado para marcar os pedidos que já foram recebidos pelo ERP, evitando que sejam novamente trazidos.
