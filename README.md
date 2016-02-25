@@ -5,11 +5,11 @@ Seguem os tipos, campos e descrições da ficha do **Produto:**
 Coluna/Campo | Tipo/Opções | Descrição
 ------------ | ------------- |------------ 
 Comando | I=Inclusão A=Alteração E=Exclusão | Indica a ação a ser realizada
-
+------------ | ------------- |------------ 
 NomeCat | varchar(25) | Nome da categoria
-
+------------ | ------------- |------------ 
 IDProduto | int | ID  interno do banco de dados
-
+------------ | ------------- |------------ 
 CodProd | varchar(15) | Código de referência do produto, exibido ao visitante
 
 NomeProd | varchar(100) | Nome do produto
@@ -69,3 +69,15 @@ AdicionalD2 | varchar(2048) | Texto da informação adicional sobre o produto, i
 AdicionalD3 | varchar(2048) | Texto da informação adicional sobre o produto, indicado em Descritor simples 3. Se multivalorado, colocar entre vírgulas.
 
 Cores | varchar(1024) | ID das cores disponíveis no produto. Se multivalorado, colocar entre vírgulas.
+
+
+
+
+
+
+
+
+
+
+
+
