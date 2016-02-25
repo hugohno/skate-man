@@ -99,6 +99,7 @@ Campo 2 | varchar(100) | Campo adicional 2
 Campo 3 | varchar(100) | Campo adicional 3
 
 Seguem os tipos, campos e descrições da ficha do **Pedidos:**
+
 Coluna/Campo | Tipo/Opções | Descrição
 ------------ | ------------- |------------ 
 Nome Cliente | varchar(50) | Nome do cliente
