@@ -1,260 +1,202 @@
-#Dicionário
-
-Seguem os tipos, campos e descrições da ficha do **Produto:**
-
-Coluna/Campo | Tipo/Opções | Descrição
------------- | ------------- |------------ 
-Comando | I=Inclusão A=Alteração E=Exclusão | Indica a ação a ser realizada
-NomeCat | varchar(25) | Nome da categoria
-IDProduto | int | ID  interno do banco de dados
-CodProd | varchar(15) | Código de referência do produto, exibido ao visitante
-NomeProd | varchar(100) | Nome do produto
-Peso | real | Peso do produto. A unidade (gramas ou quilogramas) é definida na página Dados da loja
-Descricao | varchar(200) | Descrição curta do produto
-DescrLonga | varchar(1024) | Descrição longa do produto
-DescrURL | varchar(100) | URL para mais detalhes do produto
-URLTarget | bit | Se TRUE, URL do campo DescrURL Será exibida em uma nova janela
-Estoque | smallint | Quantidade de itens do produto em estoque
-EstoqueMinimo | smallint | Quantidade mínima de itens do produto em estoque. Quando estoque ficar menor, será enviado e-mail para o lojista. Se 0, não tem mínimo.
-Disponivel | bit | Se TRUE, produto está disponível no site
-ICMS | real | Percentual de ICMS na origem do Produto, para geração de nota fiscal
-Custo | money | Custo do produto, nunca exibido ao visitante, utilizado para cálculo nos relatórios de lucratividade.
-Preco | money | Preço de venda varejo (B2C)
-PrecoProm | money | Preço promocional no varejo (B2C)
-PrecoB2B | money | Preço de venda atacado (B2B)
-PrecoB2BProm | money | Preço promocional no atacado (B2B)
-DataPromInicio | smalldatetime | Data de inicio da promoção, pode-se informar a hora. Ex: 10/05/2002 10:30
-DataPromFim | smalldatetime | Data de término da promoção, pode-se informar a hora. Ex: 10/05/2002 10:30
-Lancamento | bit | Se TRUE, indica que o produto é lançamento
-EmDestaque | bit | Se TRUE, indica que o produto tem destaque no layout da loja. Ver tag <prod>
-ImagemProd | varchar(200) | Nome do arquivo com a imagem principal do produto com extensão JPG, PNG, GIF ou SWF
-ImagemDet | varchar(200) | Nome do arquivo com a imagem de detalhe do produto com extensão JPG, PNG, GIF ou SWF
-ImagemAmp | varchar(200) | Nome do arquivo com a imagem ampliada do produto com extensão JPG, PNG, GIF ou SWF
-Adicional1 | varchar(1024) | ID para informação adicional sobre o produto, indicado em Descritor especial 1. Se multivalorado colocar entre vírgulas.
-Adicional2 | varchar(1024) | ID para informação adicional sobre o produto, indicado em Descritor especial 2. Se multivalorado colocar entre vírgulas.
-Adicional3 | varchar(1024) | ID para informação adicional sobre o produto, indicado em Descritor especial 3. Se multivalorado colocar entre vírgulas.
-AdicionalD1 | varchar(2048) | Texto da informação adicional sobre o produto, indicado em Descritor simples 1. Se multivalorado, colocar entre vírgulas.
-AdicionalD2 | varchar(2048) | Texto da informação adicional sobre o produto, indicado em Descritor simples 2. Se multivalorado, colocar entre vírgulas.
-AdicionalD3 | varchar(2048) | Texto da informação adicional sobre o produto, indicado em Descritor simples 3. Se multivalorado, colocar entre vírgulas.
-Cores | varchar(1024) | ID das cores disponíveis no produto. Se multivalorado, colocar entre vírgulas.
-OrdemProd | tinyint | Indica a ordem de exibição do produto. Ordenação decrescente.
-IDProdutoPai | int | Se preenchido, indica que este é um sub-produto e qual o ID do produto Pai
-RamoProd | tinyint | Indica o departamento no Shopping Virtuose.
-MaisProd | varchar(50) | Indica termos de busca para produtos relacionados a estes entre vírgula. (cross-selling)
-DataVencimento | smalldatetime | Indica a data de vencimento do produto, Quando será enviado e-mail de alerta ao lojista
-DiasAvisoVencimento | smallint | Números de dias antes do vencimento do produto, quando será enviado o primeiro e-mail de alerta para o lojista
-DiasReposicao | smallint | Número de dias, em média em que o produto é novamente adquirido pelo cliente. Decorridos estes dias após o pedido, um e-mail será enviado ao cliente para sugerir a reposição.
-IDParceiroProd | int | Informe o ID do parceiro que terá exclusividade para o preço promocionaldo produto. Desta forma, é possível criar promoções válidas somente paravisitantes cujo acesso seja proveniente de um parceiro ou revendedor específico.
-MaxParcelasProd | tinyint | Número máximo de parcelas para pedidos que incluam este produto.
-IDCategoria | int | ID interno da categoria cadastrada. No CSV de produtos, ao incluir um produto, é obrigatório o campo NomeCat (com o nome da categoria do produto), o sistema inclui o produto e cria a categoria caso ela não exista. Na API, ao incluir produtos na loja, o campo NomeCat ou IDCategoria deve ser informado. Se a categoria for existente pode ser informado o IDCategoria, sem passar o NomeCat.
-XMLParcelasProd | tinyint | Infica o número de parcelas utilizadas para exibir o parcelamento na página que lista os produtos em XML (XMLProdutos.asp). A lista de produtos em XML é utilizado pelos portais de comparação de preços e shopping virtuais, para capturar os produtos da loja. 
-Embalavel | bit | Se TRUE, indica o cliente pode solicitar que este produto seja embalado para presente. Deve-se informar FALSE nos produtos que não poderão ser embalados para presente devido ao seu tamanho (exemplo:bicicleta) ou por alguma outra restrição. Este campo é utilizado se a loja utilizar as opções (4), (5) ou (6) no campo "Presente" da página "Envio & frete" do site administrativo onde o cliente tem a opção de informar quais produtos do pedido deseja embalar para presente.
-DescrHTM | varchar(25) | Indica o nome do arquivo HTML contendo descrição adicional do produto. O conteúdo do arquivo HTM será incluído na posição da tag especial <DescrHTM>, caso esta tag exista no arquivo personalizado de exibição do layout de produtos na loja (EstiloProduto.htm) 
-MetaKeywordsProd | varchar(200) | Palavras-chave (keywords) específicas para o produto. Os termos devemser separados por vírgula. Exemplo: nokia,celular com wi-fi,mp3,rede 3G,GPSSão inseridas em "meta tag keyword", no código fonte da loja.  
-CodBarrasProd | varchar(25) | Código de barras do produto
-ChangeFlagProdAPI | tinyint | Utilizado para marcar os produtos que já foram recebidos pelo ERP, evitando que sejam novamente trazidos. Veja mais detalhes na seção 3.1. 
-IsProdutoGrande | bit | Indica se o produto é considerado grande para cálculo de frete, usando peso cúbico e tabela para frete grande.
-DataProdAlteracao | smalldatetime | Data/hora da última alteração do produto (exceto o cancelamento e descancelamento de pedidos)
-IDRamo | int | Indica o ID do ramo
-NomeRamo | varchar(80) | Nome do Ramo. Ex: Beleza & Saúde, Bermuda Infantil, Bonecos e Personagens, etc.
-IDRamoPai | int | Indica o ID do ramo Pai, nulo se for o primeiro nível
-IDCategoria | int | ID interno do banco de dados
-Categoria | varchar(25) | varchar(25)
-Ordem | tinyint | Indica a ordem de exibição. Ordenação decrescente.
-IDCategoriaPai | int | Se preenchido, indica que esta é uma sub-categoria e qual o ID da categoria Pai.
-Prods | real | Quantidade de produtos
-
-Seguem os tipos, campos e descrições da ficha do **Clientes:**
-
-Coluna/Campo | Tipo/Opções | Descrição
------------- | ------------- |------------ 
-Cadastro em | smalldatetime | Indica a data de cadastramento do cliente
-Tipo | Opções: PF ou PJ | Indica se o cliente é pessoa física ou jurídica
-Empresa | varchar(50) | Nome da empresa, somente quando B2B
-Contato | varchar(50) | Nome
-E-mail | varchar(50) | E-mail
-CNPJ/CPF | varchar(14) | CPF ou CNPJ
-IE/RG | varchar(20) | Inscrição estadual ou RG
-Ramo | varchar(30) | Profissão do cliente ou ramo de atuação da empresa
-% Desc | real | Percentual de desconto global nos produtos para o cliente. 
-Endereço | varchar(70) | Endereço
-Bairro | varchar(25) | Bairro
-Cidade | varchar(20) | Cidade
-Estado | char(2) | Estado
-País | varchar(20) | País
-CEP  |varchar(9) | CEP
-Telefone | varchar(20) | Telefone
-FAX | varchar(20) | FAX
-Obs curta | varchar(10) | Texto de apoio sobre o cliente, para uso interno da loja.
-Data Nasc | smalldatetime | Data de nascimento
-Pagtos | varchar(80) | Indica as formas de pagamento que este cliente pode utilizar, quando a loja tem formas de pagamento por cliente.
-Sexo | Opções: PF ou PJ | Sexo do cliente
-Última alteração | smalldatetime | Data/hora da última alteração do cliente
-Logradouro | varchar(70) | Endereço do cliente
-Endereço número | varchar(70) | Número do endereço
-Endereço complemento | varchar(70) | Complemento do endereço
-Celular | varchar(20) | Telefone móvel completo para contato e envio SMS (com DDD)
-Campo 1 | varchar(100) | Campo adicional 1
-Campo 2 | varchar(100) | Campo adicional 2
-Campo 3 | varchar(100) | Campo adicional 3
-
-Seguem os tipos, campos e descrições da ficha do **Pedidos:**
-
-Coluna/Campo | Tipo/Opções | Descrição
------------- | ------------- |------------ 
-Nome Cliente | varchar(50) | Nome do cliente
-E-mail | Cliente varchar(50) | E-mail do cliente
-Telefone | varchar(20) | Telefone do cliente
-Cidade | varchar(20) | Cidade do cliente
-Estado | char(2) \ Estado do cliente
-Núm Pedido | int | Número do pedido
-Produto(s) do Pedido | varchar(100) | Nome do produto
-Ref. | varchar(15) | Referência do produto
-Qtd | smallint | Quantidade de itens do produto
-Total sem frete | money | Valor total do pedido, SEM o frete
-Frete | money | Valor do frete
-Total com frete | money | Valor total do pedido, COM o frete
-Pagamento | varchar(50) | Opção de pagamento escolhida pelo cliente
-Cartão | Opções: AMEX, Diners, Mastercard, VISA, Hipercard, Aura e Elo | Bandeira de cartão de crédito
-Status | opções: Novo, Cancelado, em aprovação, Pendente, Aprovado, Liberado e Remetido | Status do pedido
-Feito em | smalldatetime | Data em que o pedido foi feito
-Obs curta | varchar(10) | Texto de apoio sobre o pedido, para uso interno da loja
-Entregue Em | smalldatetime | Data de entrega do pedido ao destinatário pela transportadora
-Objeto SEDEX | varchar(13) | Código fornecido pelos Correios para acompanhamento de remessas
-MoipCodigo | varchar(12) | Código da transação retornada pelo MoIP. Ex: 11202666
-MoipStatus | tinyint | Status da transação retornada pelo MoIP. Ex: 5 Os valores possíveis para o campo MoipStatus: (1) Autorizado: Pagamento autorizado. (2) Iniciado: Pagamento foi iniciado, porém sem confirmação de finalização até o momento (3) BoletoImpresso: Boleto visualizado pelo cliente (4) Concluído: Pagamento creditado em conta e disponível para saque. (5) Cancelado: Pagamento foi cancelado (6) EmAnalise: Pagamento em análise de risco (7) Estornado: Pagamento foi estornado (8) EmRevisao: Pagamento em revisão pelo Moip (9)  Reembolsado: Pagamento foi reembolsado
-AkatusID | varchar(36) | O ID da transação na Akatus. Ex: cfbda716-906b-4f69-83f8-4cdae19cb3ee
-AkatusStatus | varchar(50) | Status da transação na Akatus. Ex: Cancelado Os valores possíveis para o campo AkatusStatus: Aguardando Pagamento, Em Análise, Aprovado e Cancelado.
-ChangeFlagAPI | tinyint | Utilizado para marcar os pedidos que já foram recebidos pelo ERP, evitando que sejam novamente trazidos.
-
-Seguem os tipos, campos e descrições da ficha do **Detalhes:**
-
-Coluna/Campo | Tipo/Opções | Descrição
------------- | ------------- |------------ 
-Núm | int | Número do pedido
-Feito em | smalldatetime | Data em que o pedido foi feito
-Nome | varchar(50) | Nome do cliente
-E-mail | varchar(50) | E-mail do cliente
-Empresa | varchar(50) | Nome da empresa, somente quando B2B
-CPF/CNPJ | varchar(14) | CPF ou CNPJ
-RG/IE | varchar(20) | Inscrição estadual ou RG
-Endereço | varchar(70) | Endereço
-Bairro | varchar(25) | Bairro
-Cidade | varchar(20) | Cidade
-Estado | char(2) | Estado
-País | varchar(20) | País
-CEP | varchar(9) | CEP
-Telefone | varchar(20) | Telefone
-FAX | varchar(20) | FAX
-Nascido em | smalldatetime | Data de nascimento
-Obs cliente | varchar(10) | Texto de apoio sobre o cliente, para uso interno da loja.
-Nome Pedido | varchar(50) | Nome para entrega do pedido
-E-mail Pedido | varchar(50) | E-mail para entrega do pedido
-Endereço Pedido | varchar(70) | Endereço de entrega
-Bairro Pedido | varchar(25) | Bairro de entrega
-Cidade Pedido | varchar(20) | Cidade de entrega
-Estado Pedido | char(2) | Estado de entrega
-País Pedido | varchar(20) | País de entrega
-CEP Pedido | varchar(9) | CEP de entrega
-Telefone Pedido | varchar(20) | Telefone de entrega
-FAX Pedido | varchar(20) | FAX de entrega
-Total sem frete | money | Valor total do pedido, SEM o frete
-Frete | money | Valor do frete
-Pagamento | varchar(50) | Opção de pagamento escolhida pelo cliente
-Cartão | Opções: AMEX, Diners, Mastercard, VISA, Hipercard, Aura e Elo | Bandeira de cartão de crédito
-Parcelas | tinyint | Número de parcelas
-Presente | opções: S ou N | Se é para presente
-Status | opções: Novo, Cancelado, em aprovação, Pendente, Aprovado, Liberado e Remetido |Status do pedido
-Obs Pedido | varchar(10) | Texto de apoio sobre o pedido, para uso interno da loja
-Entregue em | smalldatetime | Data de entrega do pedido ao destinatário pela transportadora
-Obj SEDEX | varchar(13) | Código fornecido pelos Correios para acompanhamento de remessas
-Ref. Produto | varchar(15) | Referência do produto
-Nome Produto | varchar(100) | Nome do produto
-Qtd | smallint | Quantidade de itens do produto
-Preço unit | money | Preço unitário do produto
-Msg cliente | varchar(255) | Comentários feitos pelo cliente
-Local de entrega | varchar(50) | Local de entrega do pedido
-Parceiro | varchar(30) | Quando o pedido foi feito através de um parceiro, informa o nome do parceiro
-ThisfTransacao | varchar(14) | Código de transação com cartão de crédito recebido da Thisf, se a loja utiliza
-Esp1 | varchar(30) | Informação adicional sobre o produto, indicado em Descritor especial 1
-Esp2 | varchar(30) | Informação adicional sobre o produto, indicado em Descritor especial 2
-Esp3 | varchar(30) | Informação adicional sobre o produto, indicado em Descritor especial 3
-Simp1 | varchar(30) | Informação adicional sobre o produto, indicado em Descritor simples 1
-Simp2 | varchar(30) | Informação adicional sobre o produto, indicado em Descritor simples 2
-Simp3 | varchar(30) | Informação adicional sobre o produto, indicado em Descritor simples 3
-DescontoTotalSF | real | Desconto em % aplicado no total do pedido SEM o frete
-IDProduto | int | ID interno do produto no banco de dados
-Valor embalagem | smallmoney | Valor para a embalagem de presente
-Cor | varchar(30) | Cor solicitada do produto
-Cod. barras | varchar(25) | Código de barras do produto
-ObsCurta | varchar(10) | Campo para informar um pequeno texto de observação do pedido
-ccNum | varchar(19) | Número do cartão de crédito
-ccNome | varchar(30) | Nome gravado no cartão de crédito
-ccSeg | varchar(4) | Código de segurança do cartão de crédito
-ccDataExp | varchar(7) | Mês/Ano em que o cartão expira (Ex: 05/2001)
-ccAuthCod | varchar(10) | Autorização da administradora do cartão
-ccNumCV | varchar(9) | Número do comprovante de venda, emitido pela administradora do cartão
-ccNumAutent | varchar(27) | Número de autenticação da venda, emitido pela administradora do cartão
-ccNumPrg | varchar(1) | Retorno do Komerci SecureCode (0,1,2,3,4)
-ccCodRet | varchar(2) | Código de retorno do processo de autorização da venda, informado pela administradora do cartão
-ccORIGEM_BIN | char(3) | Cód país emissor Komerci
-ccEndereco | varchar(100) | Endereço reportado pela Redecard via AVS
-VisaTID | char(20) | Identificação da transação na Cielo
-VisaLR | varchar(4) | Cód de retorno da Cielo
-VisaARP | varchar(6) | Cód aprovação bancária informado pela Cielo, somente para pedidos autorizados.
-VisaCOD | varchar(4) | Código do resultado da captura do pedido informado pela Cielo
-VisaAuth | varchar(3) | Indica se o pedido foi autenticado pelo banco emissor: 0 ou vazio=transação sem autenticação 1=ok 2=negado 3=falha
-VisaCAP | money | Valor capturado informado pela Cielo
-VisaBank | varchar(4) | Código do banco emissor do cartão
-ThisfAutorizacao | varchar(6) | Código de autorização recebido pela Thisf da administradora do cartão
-MoipCodigo | varchar(12) | Código da transação retornada pelo MoIP
-MoipStatus | tinyint | Status da transação retornada pelo MoIP
-AkatusID | varchar(36) | O ID da transação na Akatus.
-AkatusStatus | varchar(50) | Status da transação na Akatus
-Tipo | Opções: PF ou PJ | Indica se o cliente é pessoa física ou jurídica
-Logradouro | varchar(70) | Endereço do cliente
-Endereço número | varchar(70) | Número do endereço
-Endereço complemento | varchar(70) | Complemento do endereço
-Celular | varchar(20) | Telefone móvel completo para contato e envio SMS (com DDD)
-Campo 1 | varchar(100) | Campo adicional 1
-Campo 2 | varchar(100) | Campo adicional 2
-Campo 3 | varchar(100) | Campo adicional 3
-Logradouro Pedido | varchar(70) | Endereço
-Endereço número Pedido | varchar(70) | Número do endereço
-Endereço complemento Pedido | varchar(70) | Complemento do endereço
-Campo 1 Pedido | varchar(100) | Campo adicional no pedido 1
-Campo 2 Pedido | varchar(100) | Campo adicional no pedido 2
-Campo 3 Pedido | varchar(100) | Campo adicional no pedido 3
-ThisfAutorizacao | varchar(6) | Código de autorização recebido pela Thisf da administradora do cartão
-Embalar Produto | Opções: S ou N | Indica se produto deve ser embalado
-Valor embalagem produto | smallmoney | Valor para embalagem do produto
-Desconto Cupom | real | Valor em $ do desconto no pedido
-ChangeFlagAPI | tinyint | Utilizado para marcar os pedidos que já foram recebidos pelo ERP, evitando que sejam novamente trazidos.
-Alterado em | smalldatetime | Data da última alteração do pedido
-Logradouro | varchar(70) | Endereço do cliente
-
-Seguem os tipos, campos e descrições da ficha de **Acessos:**
-
-Coluna/Campo | Tipo/Opções | Descrição
------------- | ------------- |------------ 
-Method | Opções: ReportView, OrderUpdate, ProductManagement, NfeOperation, UtilityExecute. | Indica o método
-Nome | varchar(80) | Indica o nome do relatório, utilitário.
-Data execução | datetime | Data/hora de início do processamento
-Usuário | varchar(20) | Nome do usuário
-Regs | int | Quantidade de registros lidos, incluídos, alterados ou excluídos
-Parâm 1 | varchar(15) | Legenda para o parâmetro 1
-Valor 1 | varchar(100) | Valor informado no parâmetro 1
-Parâm 2 | varchar(15) | Legenda para o parâmetro 2
-Valor 2 | varchar(100) | Valor informado no parâmetro 2
-Parâm 3 | varchar(15) | Legenda para o parâmetro 3
-Valor 3 | varchar(100) | Valor informado no parâmetro 3
-Parâm 4 | varchar(15) | Legenda para o parâmetro 4
-Valor 4 | varchar(100) | Valor informado no parâmetro 4
-Parâm 5 | varchar(15) | Legenda para o parâmetro 5
-Valor 5 | varchar(100) | Valor informado no parâmetro 5
-Parâm 6 | varchar(15) | Legenda para o parâmetro 6
-Valor 6 | varchar(100) | Valor informado no parâmetro 6
-Parâm 7 | varchar(15) | Legenda para o parâmetro 7
-Valor 7 | varchar(100) | Valor informado no parâmetro 7
-Parâm 8 | varchar(15) | Legenda para o parâmetro 8
-Valor 8 | varchar(100) | Valor informado no parâmetro 8
+| ObjectID | Nome                                                     | Descrição                                                                                                                                                                                                                                                       | Tipo                   |
+|----------|----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------|
+| 423      | (FC) Lista de relatórios e utilitários                   | Relaciona os relatórios e utilitários disponíveis para uso pelo site administrativo ou via API. Informa os parâmetros e o ObjectID. Pode-se filtrar por trecho do nome ou da descrição.                                                                         | Relatório especial     |
+| 213      | Acessos ao site administrativo no momento                | Lista os usuários que estão acessando o site administrativo no momento e os acessos mais recentes. Pode-se exibir somente os acessos com senha válida ou somente as tentativas com senha inválida.                                                              | Relatório especial     |
+| 39       | Acessos ao site administrativo no período                | Lista os usuários que acessaram o site administrativo, no período informado. Indica a hora de entrada e saída de cada acesso. Pode-se exibir somente as tentativas com senha inválida.                                                                          | Relatório especial     |
+| 390      | Acessos ao site administrativo no período (usuário)      | Lista os acessos ao site administrativo do usuário logado, no período informado. Indica a hora de entrada e saída de cada acesso. Pode-se exibir somente os acessos com senha válida ou somente as tentativas com senha inválida.                               | Relatório estatístico  |
+| 515      | Acessos ao site administrativo por usuário               | Lista os usuários que acessaram o site administrativo no período desejado, informando a quantidade de acessos e pageviews. Também são listadas as tentativas de acesso com senha inválida. Pode-se filtrar por usuário.                                         | Relatório estatístico  |
+| 63       | Acessos diários no período                               | Informa o número de acessos diários, para o período informado (em número de visitantes e em page views). Pode-se contabilizar apenas os acessos com pedidos. Marque o campo <i>Pessoas na loja</i> para excluir os acessos de robôs e do site administrativo.   | Relatório estatístico  |
+| 95       | Acessos diários no período a partir de parceiro          | Informa o número de acessos diários obtidos a partir do site do parceiro, para o período informado (em número de visitantes e em page views). Pode-se contabilizar apenas os acessos com pedidos e novos visitantes.                                            | Relatório de parceiros |
+| 217      | Acessos diários no período a partir de um parceiro       | Informa o número de acessos diários obtidos a partir do site do parceiro especificado, para o período informado (em número de visitantes e em page views). Pode-se contabilizar apenas os acessos com pedidos.                                                  | Relatório estatístico  |
+| 64       | Acessos mensais no período                               | Informa o número de acessos por mês, para o período informado (em número de visitantes e em page views). Pode-se contabilizar apenas os acessos com pedidos. Marque o campo <i>Pessoas na loja</i> para excluir os acessos de robôs e do site administrativo.   | Relatório estatístico  |
+| 97       | Acessos mensais no período a partir de parceiro          | Informa o número de acessos por mês obtidos a partir do site do parceiro, para o período informado (em número de visitantes e em page views). Pode-se contabilizar apenas os acessos com pedidos.                                                               | Relatório de parceiros |
+| 218      | Acessos mensais no período a partir de um parceiro       | Informa o número de acessos por mês obtidos a partir do site do parceiro especificado, para o período informado. Pode-se contabilizar apenas os acessos com pedidos.                                                                                            | Relatório estatístico  |
+| 259      | Acessos no período                                       | Informa o número total de acessos no período informado (em número de visitantes e em page views). Marque o campo <i>Pessoas na loja</i> para excluir os acessos de robôs e do site administrativo.                                                              | Relatório estatístico  |
+| 48       | Acessos nos últimos 30 dias                              | Informa o número de acessos diários ao site nos últimos 30 dias (em número de visitantes e em page views). Pode-se contabilizar apenas os acessos com pedidos.                                                                                                  | Relatório estatístico  |
+| 96       | Acessos nos últimos 30 dias a partir de parceiro         | Informa o número de acessos diários ao site nos últimos 30 dias (em número de visitantes e em page views), obtidos a partir do site do parceiro. Pode-se contabilizar apenas os acessos com pedidos.                                                            | Relatório de parceiros |
+| 219      | Acessos nos últimos 30 dias a partir de um parceiro      | Informa o número de acessos diários ao site nos últimos 30 dias, obtidos a partir do site do parceiro especificado. Pode-se contabilizar apenas os acessos com pedidos.                                                                                         | Relatório estatístico  |
+| 235      | Acessos por minuto (no período)                          | Informa o número de acessos a cada minuto no período informado (em número de visitantes e em page views). Pode-se contabilizar apenas os acessos a partir de um parceiro e os acessos com pedidos. Período máximo de 2 horas.                                   | Relatório estatístico  |
+| 234      | Acessos por minuto (recentes)                            | Informa o número de acessos a cada minuto nas últimas horas (em número de visitantes e em page views). Pode-se contabilizar apenas os acessos a partir de um parceiro e os acessos com pedidos.                                                                 | Relatório estatístico  |
+| 84       | Aniversariantes do mês                                   | Relaciona os clientes que fazem aniversário no mês corrente ou no mês indicado. Clique no e-mail para enviar mensagem ao cliente.                                                                                                                               | Relatório estatístico  |
+| 36       | Aniversariantes dos próximos dias                        | Relaciona os clientes que fazem aniversário hoje ou nos próximos dias. Clique no e-mail para enviar mensagem ao cliente.                                                                                                                                        | Relatório estatístico  |
+| 395      | Aviso de disponibilidade de produto (ID)                 | Lista os e-mails dos visitantes que solicitaram aviso de disponibilidade do produto. A busca é feita pelo ID do produto, informado no topo da ficha do produto no site administrativo.                                                                          | Relatório de produtos  |
+| 124      | Aviso de disponibilidade de produtos (clientes)          | Lista os e-mails dos visitantes que solicitaram aviso de disponibilidade de produtos esgotados. Pode-se exibir apenas os produtos disponíveis.                                                                                                                  | Relatório de produtos  |
+| 125      | Aviso de disponibilidade de produtos (produtos)          | Lista os produtos para os quais foram solicitados aviso de disponibilidade de produtos esgotados. Pode-se exibir apenas os produtos disponíveis.                                                                                                                | Relatório de produtos  |
+| 135      | Buscas de produtos no período                            | Relaciona as procuras por produtos, indicando termos de busca, faixas de preço, categorias, lançamentos e promoções e quantidade de produtos encontrados. Pode-se indicar o período, o termo ou trazer apenas as buscas detalhadas.                             | Relatório de produtos  |
+| 301      | Buscas de produtos no período (digitadas)                | Relaciona as procuras digitadas nos campos de busca, indicando termos, faixas de preço, categorias e quantidade de produtos encontrados. Pode-se indicar o período, o termo ou trazer apenas buscas detalhadas.                                                 | Relatório de produtos  |
+| 143      | Buscas mais freqüentes de produtos                       | Relaciona os termos de procuras por produtos, indicando a quantidade de buscas feitas para cada termo. Pode-se indicar o período e o termo.                                                                                                                     | Relatório de produtos  |
+| 302      | Buscas mais freqüentes de produtos (digitadas)           | Relaciona os principais termos de procuras por produtos, digitadas nos campos de busca, indicando a quantidade de buscas feitas para cada termo. Pode-se indicar o período e o termo.                                                                           | Relatório de produtos  |
+| 90       | Categorias cadastradas                                   | Listagem com todos as categorias cadastradas e o número de produtos de cada uma. Pode-se solicitar apenas categorias disponíveis ou com produtos.                                                                                                               | Relatório de produtos  |
+| 429      | Categorias e IDs para cadastro de produtos via API       | Relaciona as categorias cadastradas e o número de produtos de cada uma, para utilização em sistemas integrados via API. Pode-se solicitar apenas categorias disponíveis, com produtos, por trecho do nome ou por ID.                                            | Relatório de produtos  |
+| 73       | Categorias mais vendidas por preço                       | Lista as categorias de produtos que mais venderam na loja no período informado, ordenadas por preço. Pode-se informar o método de pagamento. Serão utilizadas as datas de realização dos pedidos.                                                               | Relatório de pedidos   |
+| 75       | Categorias mais vendidas por qtd                         | Lista as categorias de produtos que mais venderam na loja no período informado, ordenadas por quantidade. Pode-se informar o método de pagamento. Serão utilizadas as datas de realização dos pedidos.                                                          | Relatório de pedidos   |
+| 72       | Categorias menos vendidas por preço                      | Lista as categorias de produtos que menos venderam na loja no período informado, ordenadas por preço. Pode-se informar o método de pagamento. Serão utilizadas as datas de realização dos pedidos.                                                              | Relatório de pedidos   |
+| 74       | Categorias menos vendidas por qtd                        | Lista as categorias de produtos que menos venderam na loja no período informado, ordenadas por quantidade. Pode-se informar o método de pagamento. Serão utilizadas as datas de realização dos pedidos.                                                         | Relatório de pedidos   |
+| 52       | Comparativo de acessos por dia da semana                 | Exibe gráfico comparativo com a distribuição dos acessos por dia da semana.                                                                                                                                                                                     | Relatório estatístico  |
+| 51       | Comparativo de acessos por horário                       | Exibe gráfico comparativo com a distribuição dos acessos hora a hora.                                                                                                                                                                                           | Relatório estatístico  |
+| 62       | Comparativo de clientes por faixa etária                 | Mostra gráfico comparando os clientes por faixa etária. Pode-se informar o período do cadastro do cliente.                                                                                                                                                      | Relatório estatístico  |
+| 116      | Comparativo de clientes por sexo                         | Mostra gráfico comparando os clientes por sexo. Pode-se informar o período do cadastro do cliente.                                                                                                                                                              | Relatório estatístico  |
+| 113      | Comparativo de número de retornos ao site                | Exibe comparação entre o número de visitantes que visitou a loja apenas uma vez, duas vezes, etc. Pode-se indicar o período desejado e selecionar apenas visitantes que fizeram pedidos.                                                                        | Relatório estatístico  |
+| 81       | Comparativo de visitantes e compradores                  | Compara o número total de visitantes com os que colocam produtos em cesta, os que fecham pedido e os que têm seus pedidos remetidos. Pode-se informar o período.                                                                                                | Relatório estatístico  |
+| 139      | Comparativo dos cartões de crédito por qtd               | Compara o uso dos cartões de crédito no período, por quantidade de pedidos. Pode-se escolher o status dos pedidos.                                                                                                                                              | Relatório de pedidos   |
+| 140      | Comparativo dos cartões de crédito por total             | Compara o uso dos cartões de crédito no período, por total sem frete. Pode-se escolher o status dos pedidos.                                                                                                                                                    | Relatório de pedidos   |
+| 49       | Comparativo dos meios de pagamento por qtd               | Compara o uso dos métodos de pagamento no período, por quantidade, para pedidos aprovados, liberados e remetidos.                                                                                                                                               | Relatório de pedidos   |
+| 53       | Comparativo dos meios de pagamento por total             | Compara o uso dos métodos de pagamento no período, por total sem frete, para pedidos aprovados, liberados e remetidos.                                                                                                                                          | Relatório de pedidos   |
+| 70       | Comparativo dos principais browsers dos visitantes       | Exibe gráfico comparativo com os principais browsers utilizados pelos visitantes. Pode-se indicar o período e solicitar apenas os visitantes que fizeram pedido.                                                                                                | Relatório estatístico  |
+| 71       | Comparativo dos principais sistemas operacionais         | Exibe gráfico comparativo com os principais sistemas operacionais utilizados pelos visitantes. Pode-se indicar o período e solicitar apenas os visitantes que fizeram pedido.                                                                                   | Relatório estatístico  |
+| 87       | Comparativo dos status de pedidos por qtd                | Gera gráfico comparativo de status dos pedidos, por quantidade, no período informado.                                                                                                                                                                           | Relatório de pedidos   |
+| 88       | Comparativo dos status de pedidos por valor              | Gera gráfico comparativo de status dos pedidos, por valor total (sem frete), no período informado.                                                                                                                                                              | Relatório de pedidos   |
+| 484      | Comparativo dos tipos de acesso no momento               | Exibe gráfico comparativo dos tipos de acesso dos visitantes no momento. Pode-se filtrar pelo horário do acesso (até 3 horas atrás). Marque o campo <i>Pessoas na loja</i> para excluir os acessos de robôs e do site administrativo.                           | Relatório estatístico  |
+| 485      | Comparativo dos tipos de acesso no período               | Exibe gráfico comparativo dos tipos de acesso dos visitantes, informado em quantidade de visitantes. Pode-se indicar o período. Marque o campo <i>Pessoas na loja</i> para excluir os acessos de robôs e do site administrativo.                                | Relatório estatístico  |
+| 486      | Comparativo dos tipos de acesso no período (pv)          | Exibe gráfico comparativo dos tipos de acesso dos visitantes, informado em quantidade de pageviews. Pode-se indicar o período. Marque o campo <i>Pessoas na loja</i> para excluir os acessos de robôs e do site administrativo.                                 | Relatório estatístico  |
+| 510      | Dados da loja para consultas via API                     | Retorna informações de configuração da loja, tais como tipo de moeda, nomes dos descritores, se a loja utiliza subprodutos e subcategorias etc.                                                                                                                 | Relatório especial     |
+| 286      | Dados para etiquetas de pedidos                          | Lista detalhes de clientes e pedidos, para impressão de etiquetas para uso com o recurso de mala direta do Word. Pode-se restringir por status do pedido, forma de pagamento e intervalo de numeração de pedidos.                                               | Relatório de pedidos   |
+| 405      | Demanda agrupada de produtos sem estoque suficiente      | Informa quantidade de produtos incluídos na cesta mas cujas quantidades solicitadas não tinham estoque suficiente. Pode-se filtrar por período e por produto. Dados mantidos por 180 dias.                                                                      | Relatório de produtos  |
+| 397      | Demanda de produtos sem estoque suficiente               | Lista produtos incluídos na cesta mas cujas quantidades solicitadas não tinham estoque suficiente. Pode-se filtrar por período, produto e cliente. Utilizado a partir das fichas de produto e de cliente. Dados mantidos por 180 dias.                          | Relatório de produtos  |
+| 121      | Extrato da loja no período                               | Emite extrato da loja no período informado. Os lançamentos são relativos aos serviços cobrados pelo FastCommerce e aos pagamentos realizados pela loja à Rumo Informática.                                                                                      | Relatório especial     |
+| 431      | Funil de compra no período                               | Informa os totais de acessos de cada página no processo de fechamento de pedidos (funil de compra), no período informado. Somente os acessos dos últimos 60 dias são considerados.                                                                              | Relatório estatístico  |
+| 503      | Funil de compra no período - Xtreme Checkout             | Informa os totais de acessos de cada etapa no processo de fechamento de pedidos (funil de compra) do Xtreme Checkout, no período informado. Somente os acessos dos últimos 60 dias são considerados.                                                            | Relatório estatístico  |
+| 439      | Funil de compra no período por parceiro ou cupom         | Informa os totais de acessos de cada página no processo de fechamento de pedidos (funil de compra), no período informado. Pode-se filtrar por parceiro ou cupom. Somente os acessos dos últimos 60 dias são considerados.                                       | Relatório estatístico  |
+| 35       | Histórico de acessos à loja por um visitante             | Exibe informações sobre todos os acessos em um período informado feitos pelo cliente que fez determinado pedido ou número de sessão de um visitante.                                                                                                            | Relatório estatístico  |
+| 519      | Histórico de pageviews por período                       | Visualiza total de pageviews contratados e registrados em cada período de contabilização das visitas da loja. Deixe os filtros em branco para gerar o histórico de todos os períodos.                                                                           | Relatório estatístico  |
+| 109      | ICMS diário recolhido no período                         | Totaliza o ICMS recolhido dia a dia, para todos os produtos remetidos no período informado. Pode-se informar o meio de pagamento.                                                                                                                               | Relatório especial     |
+| 110      | ICMS mensal recolhido no período                         | Totaliza o ICMS recolhido mês a mês, para todos os produtos remetidos no período informado. Pode-se informar o meio de pagamento.                                                                                                                               | Relatório especial     |
+| 478      | IPs por user agent                                       | Informa os IPs, pageviews e as páginas acessadas por determinado user agent no período.                                                                                                                                                                         | Relatório estatístico  |
+| 514      | Lista de anúncios do MercadoLivre                        | Relaciona os anúncios no MercadoLivre. Pode-se filtrar por ID e nome do produto, ID e título do anúncio, status e por anúncios associados ou não associados a produtos da loja.                                                                                 | Relatório de produtos  |
+| 40       | Lista de assinantes de boletins                          | Relaciona visitantes que pediram para receber ou deixar de receber boletins. Selecione <i>Auto</i> para listar apenas os assinantes inseridos automaticamente através das páginas 'Fale conosco', 'Indique a loja' e 'Recomendação de produto'.                 | Relatório especial     |
+| 160      | Lista de assinantes de boletins com pedidos              | Relaciona os clientes para receber boletins, desde a data informada. Apenas clientes com pedidos serão listados, de acordo com o termo de busca (categoria, ref ou nome de produto adquirido). Útil para criar listas direcionadas.                             | Relatório especial     |
+| 399      | Lista de assinantes de E-mail Marketing                  | Relaciona os visitantes que pediram para receber ou para não receber os boletins da loja. Pode-se filtrar pela data do último envio feito para o assinante ou pela data da última vez que o assinante abriu ou clicou em mensagem.                              | Relatório especial     |
+| 513      | Lista de avaliações de clientes sobre produtos           | Lista os comentários feitos pelos clientes sobre produtos da loja. Pode-se filtrar pela data da avaliação, faixa da nota atribuída pelo cliente, e mostrar só as avaliações ativas ou inativas. Pode-se buscar por referência, nome, descrição e ID do produto. | Relatório de produtos  |
+| 497      | Lista de banners cadastrados                             | Relaciona os banners da loja, incluindo seus detalhes e resultados de impressões e cliques. Pode-se filtrar pelo nome do banner, posição e período de exibição.                                                                                                 | Relatório estatístico  |
+| 428      | Lista de classes de produtos para cadastro via API       | Relaciona as <a href=#a onclick='MostraAjuda(10,310,410)'>classes padronizadas</a> de produtos, para utilização em sistemas integrados via API. Pode-se buscar somente por um ID, por trecho do nome ou listar todas as sub-classes filhas de uma classe.       | Relatório de produtos  |
+| 274      | Lista de clientes a partir de um parceiro                | Relação dos clientes cadastrados a partir de um determinado parceiro. Pode-se indicar o período do cadastro e filtrar de acordo com seu desconto.                                                                                                               | Relatório de pedidos   |
+| 455      | Lista de clientes com cestas abandonadas no período      | Relaciona os clientes que abandonaram cestas no período informado. Pode-se filtrar pela categoria e pela referência do produto. Pode-se retirar da lista clientes que utilizaram um cupom e que fizeram compras após o abandono da cesta.                       | Relatório de pedidos   |
+| 454      | Lista de clientes com pedidos cancelados no período      | Relaciona os clientes que tiveram pedidos cancelados na loja no período informado. Pode-se filtrar pela forma de pagamento.                                                                                                                                     | Relatório de pedidos   |
+| 443      | Lista de clientes de determinado grupo                   | Relaciona os clientes que estão no grupo informado. Pode-se listar somente os clientes que realizaram compras na loja e que desejam receber e-mail marketing (opt-in).                                                                                          | Relatório de pedidos   |
+| 512      | Lista de clientes e produtos de cestas abandonadas       | Relaciona os clientes que abandonaram cestas de compras e seus respectivos produtos. Pode-se filtrar pelo período, pela categoria e pela referência do produto.                                                                                                 | Relatório de pedidos   |
+| 426      | Lista de clientes para consultas via API                 | Relaciona os clientes para exportação para sistemas externos integrados à loja virtual via API. Pode-se filtrar por período do cadastro, período da última alteração e clientes com desconto cadastrado.                                                        | Relatório de pedidos   |
+| 156      | Lista de clientes pessoa física e jurídica               | Relação dos clientes cadastrados, informando as formas de pagamento específicas. Pode-se indicar o período do cadastro e filtrar apenas por pessoa física ou jurídica.                                                                                          | Relatório de pedidos   |
+| 229      | Lista de clientes por localidade                         | Relação dos clientes cadastrados, informando as formas de pagamento específicas. Pode-se filtrar apenas por bairro, cidade, estado ou país.                                                                                                                     | Relatório de pedidos   |
+| 191      | Lista de clientes por sexo                               | Relação dos clientes cadastrados, informando as formas de pagamento específicas. Pode-se indicar o período do cadastro e filtrar apenas por sexo.                                                                                                               | Relatório de pedidos   |
+| 392      | Lista de clientes que nunca fizeram pedido               | Relaciona os clientes que se cadastraram na loja mas nunca fizeram pedido. Pode-se filtrar pelo período em que o cliente se cadastrou, pela cidade e pelo estado do cliente. Clique no e-mail para enviar mensagem ao cliente.                                  | Relatório de pedidos   |
+| 376      | Lista de clientes que receberam DOTZ                     | Lista os pedidos de clientes bonificados com DOTZ. Pode-se restringir por período, status do pedido e número mínimo de DOTZ enviados.                                                                                                                           | Relatório de pedidos   |
+| 247      | Lista de clientes, pedidos e produtos com descritores    | Lista todos os detalhes de clientes e pedidos, no período informado. Inclui cores e descritores especiais (esp) e simples (simp) dos produtos. Pode-se restringir por período, status do pedido e forma de pagamento.                                           | Relatório de pedidos   |
+| 208      | Lista de clientes, pedidos e respectivos produtos        | Lista todos os detalhes de clientes e pedidos, no período informado. Pode-se restringir por período, status do pedido e forma de pagamento.                                                                                                                     | Relatório de pedidos   |
+| 494      | Lista de cofres dos cartões dos clientes                 | Relaciona os cofres dos clientes, retornados pelos intermediadores de pagamentos. Cofres são chaves que representam com segurança os dados de um cartão de crédito, exceto o código de segurança. Pode-se filtrar pela bandeira ou pelo cliente.                | Relatório de pedidos   |
+| 394      | Lista de cores de produtos                               | Lista as cores de produtos, incluindo os respectivos IDs. Pode-se filtrar pelo nome da cor e pelo código RGB hexadecimal (sem #). Selecione o campo Internas para listar também as cores padronizadas.                                                          | Relatório de produtos  |
+| 438      | Lista de cupons                                          | Relação dos cupons cadastrados. Pode-se indicar o período de validade do cupom e filtrar de acordo com o nome ou código do cupom e seu valor percentual ou monetário.                                                                                           | Relatório especial     |
+| 393      | Lista de descritores especiais de produtos               | Lista os itens cadastrados no descritor especial de produto escolhido, incluindo os respectivos IDs. Pode-se filtrar por trecho do item.                                                                                                                        | Relatório de produtos  |
+| 398      | Lista de e-mails da campanha                             | Relaciona assinantes de newsletters, de acordo com os filtros pré-definidos da campanha de E-mail Marketing informada.                                                                                                                                          | Relatório especial     |
+| 441      | Lista de estoque de produtos para alterações via API     | Relaciona quantidade em estoque de produtos para utilização em sistemas externos via API, pelo método ProductManagement. Selecione o formato API para listar os produtos com os filtros informados. Pode-se filtrar pelo período da última alteração.           | Relatório de produtos  |
+| 530      | Lista de filtros de produtos                             | Lista os itens cadastrados nos filtros de produtos, incluindo os respectivos IDs. Pode-se filtrar pelo nome do filtro, descrição, ID e nome do item, por tipo de filtro e por filtro e itens ativos.                                                            | Relatório de produtos  |
+| 250      | Lista de imagens de produtos                             | Relaciona todas as imagens dos produtos (principal, detalhe e ampliada) e categorias. Pode-se listar apenas as imagens dos produtos disponíveis, não disponíveis, esgotados ou não esgotados. Útil para remover imagens sem uso da pasta Prod.                  | Relatório de produtos  |
+| 388      | Lista de locais de entrega do cliente                    | Relaciona os endereços de entrega cadastrados pelo cliente ao fazer cada pedido (ex: casa, escritório etc). Pode-se filtrar pelo nome que identifica o local.                                                                                                   | Relatório de pedidos   |
+| 442      | Lista de melhores clientes                               | Relaciona os clientes que mais compraram na loja. São considerados apenas os pedidos aprovados, liberados ou remetidos. Pode-se filtrar pelo período dos pedidos e pelo grupo de envio.                                                                         | Relatório de pedidos   |
+| 383      | Lista de mensagens SMS enviadas                          | Relaciona as mensagens SMS que foram enviadas no período. Pode-se filtrar pelo número do pedido e pelo celular do cliente. Pedido não é informado nas mensagens de aviso de disponibilidade de produto.                                                         | Relatório de pedidos   |
+| 491      | Lista de operações de NFe                                | Relaciona as operações de NFe que foram realizadas no período. Pode-se filtrar pelo número do pedido, número da NFe e pelo tipo de operação.                                                                                                                    | Relatório de pedidos   |
+| 402      | Lista de parceiros                                       | Relação dos parceiros cadastrados. Pode-se indicar o período de validade do desconto e filtrar de acordo com dados do parceiro e seu desconto.                                                                                                                  | Relatório especial     |
+| 434      | Lista de pedidos alterados para consultas via API        | Relaciona os pedidos e respectivos produtos para exportação para sistemas externos integrados à loja virtual via API. Pode-se filtrar por status, período da última alteração do pedido ou forma de pagamento.                                                  | Relatório de pedidos   |
+| 516      | Lista de pedidos do MercadoLivre                         | Relaciona os pedidos feitos através do MercadoLivre. Pode-se filtrar pelo número do pedido da loja ou do MercadoLivre, período, status do pedido na loja, status do pedido, pagamento e frete do MercadoLivre, pelos pedidos que já tem qualificação ou não.    | Relatório de pedidos   |
+| 430      | Lista de pedidos e dados de cartões de crédito           | Relaciona informações de pedidos e dados dos cartões de crédito para submeter transações em gateways de pagamentos externos integrados à loja virtual via API.                                                                                                  | Relatório de pedidos   |
+| 427      | Lista de pedidos e detalhes para consultas via API       | Relaciona os pedidos e respectivos produtos para exportação para sistemas externos integrados à loja virtual via API. Pode-se filtrar por status, período do pedido ou forma de pagamento. Marque Dados cartão para exibir campos de transações com cartões.    | Relatório de pedidos   |
+| 184      | Lista de pedidos e respectivos produtos                  | Lista os produtos existentes em pedidos, no período informado. Pode-se restringir por período e status do pedido. É possível também selecionar a ordenação da lista por vários campos.                                                                          | Relatório de pedidos   |
+| 440      | Lista de pedidos feitos por cupom                        | Lista todos os pedidos que incluem o cupom, no período informado. Informe o nome ou código do cupom. Pode-se restringir por status do pedido.                                                                                                                   | Relatório de pedidos   |
+| 294      | Lista de pedidos feitos por produto                      | Lista todos os pedidos que incluem cada produto, no período informado. Informe a categoria, referência ou nome do produto. Pode-se restringir por status do pedido ou ID do cliente.                                                                            | Relatório de pedidos   |
+| 461      | Lista de pedidos feitos por produto (código de barras)   | Lista todos os pedidos que incluem determinado código de barras de produto, no período informado. Pode-se restringir por status do pedido.                                                                                                                      | Relatório de pedidos   |
+| 396      | Lista de pedidos feitos por produto (ID)                 | Lista todos os pedidos que incluem determinado ID de produto, no período informado. Pode-se restringir por status do pedido.                                                                                                                                    | Relatório de pedidos   |
+| 424      | Lista de pedidos para alterações via API                 | Relaciona pedidos para posterior utilização em sistemas externos integrados à loja virtual via API. Somente os campos do método OrderUpdate são listados. Selecione o formato API para listar os pedidos com os filtros informados.                             | Relatório de pedidos   |
+| 425      | Lista de produtos para alterações via API                | Relaciona produtos p/posterior utilização em sistemas externos integrados à loja virtual via API, pelo método ProductManagement. Selecione o formato API para listar os produtos com os filtros informados. Pode-de filtrar pelo período da última alteração.   | Relatório de produtos  |
+| 499      | Lista de produtos pela data de vencimento                | Relaciona os produtos cuja data de vencimento esteja no intervalo informado. Pode-se filtrar também pela categoria, promoção, disponibilidade e Ref/Nome/Descr.                                                                                                 | Relatório de produtos  |
+| 481      | Lista de URLs com erro 404 no período                    | Relaciona as URLs inexistentes que foram acessadas pelos visitantes da loja. Pode-se filtrar pelo período e pelo tipo de acesso.                                                                                                                                | Relatório estatístico  |
+| 136      | Lista negativa de clientes                               | Listagem com nomes e CEPs de maus clientes. Esta relação é compartilhada por todas as lojas que utilizam o FastCommerce. Inclui observação curta feita pela loja que incluiu o cliente na lista.                                                                | Relatório de pedidos   |
+| 129      | Lista pedidos e CEPs                                     | Lista os pedidos no período informado, incluindo CEP. Pode-se restringir o status do pedido e o conteúdo da observação curta.                                                                                                                                   | Relatório de pedidos   |
+| 419      | Log de acessos por API                                   | Lista os métodos que foram executados através de API no período, informando os parâmetros e o número de registros afetados (lidos, incluídos, alterados ou excluídos). Clique no nome para abrir janela com os mesmos parâmetros para reexecução.               | Relatório estatístico  |
+| 351      | Log de auditoria de clientes                             | Lista o histórico de alterações feitas nos campos da ficha de cada cliente. Pode-se filtrar por nome do cliente, observação e pelo período do log.                                                                                                              | Relatório de pedidos   |
+| 255      | Log de auditoria de clientes por usuário                 | Lista os logs de alterações feitas nas informações de clientes. Pode-se filtrar por usuário, período e alterações/observações.                                                                                                                                  | Relatório de pedidos   |
+| 352      | Log de auditoria de pedidos                              | Lista o histórico de alterações feitas nos campos da ficha de cada pedido. Pode-se filtrar por número do pedido, observação e pelo período do log.                                                                                                              | Relatório de pedidos   |
+| 254      | Log de auditoria de pedidos por usuário                  | Lista os logs de alterações feitas nas informações de pedidos. Pode-se filtrar por usuário, período e status do pedido.                                                                                                                                         | Relatório de pedidos   |
+| 353      | Log de auditoria de produtos                             | Lista o histórico de alterações feitas nos campos da ficha de cada produto. Pode-se filtrar por categoria, referência, nome do produto, observação e pelo período do log.                                                                                       | Relatório de produtos  |
+| 354      | Log de auditoria de produtos por usuário                 | Lista os logs de alterações feitas nas informações de produtos. Pode-se filtrar por usuário, período e observações feitas sobre o produto.                                                                                                                      | Relatório de produtos  |
+| 400      | Log de campanhas de E-mail Marketing                     | Lista os logs de envios de E-Mail Marketing feitos no período selecionado. Pode-se filtrar por trecho do assunto da mensagem enviada.                                                                                                                           | Relatório estatístico  |
+| 406      | Log de relatórios e utilitários                          | Lista os relatórios e utilitários que foram executados no período, informando os parâmetros e o número de registros afetados (lidos, incluídos, alterados ou excluídos). Clique no nome para abrir janela com os mesmos parâmetros para reexecução.             | Relatório estatístico  |
+| 105      | Lucratividade diária obtida no período                   | Totaliza a diferença entre o custo do produto e o preço de venda do mesmo, para todos os pedidos remetidos, dia-a-dia no período informado. Pode-se informar o meio de pagamento.                                                                               | Relatório especial     |
+| 106      | Lucratividade mensal obtida no período                   | Totaliza a diferença mensal entre o custo do produto e o preço de venda do mesmo, para todos os pedidos remetidos no período informado. Pode-se informar o meio de pagamento.                                                                                   | Relatório especial     |
+| 382      | Médias e quantidades de avaliações dos produtos          | Lista dos produtos informando a média e a quantidade de avaliações feitas pelos clientes liberadas até a véspera. Pode-se filtrar por média mínima, média máxima e quantidade de avaliações.                                                                    | Relatório de produtos  |
+| 111      | Mensagens enviadas por visitantes                        | Lista as mensagens remetidas a partir das páginas <i>Fale Conosco</i> e <i>Indique a Loja</i>. Pode-se indicar o período, ou procurar por e-mail específico ou palavras da mensagem.                                                                            | Relatório especial     |
+| 529      | Notícias cadastradas por URL personalizada e Title       | Lista as notícias cadastradas na loja e seus respectivos Title e URLs personalizadas. Pode-se solicitar apenas notícias disponíveis ou não disponíveis. Pode-se filtrar pela data, Title, URL personalizada e título da notícia.                                | Relatório de produtos  |
+| 85       | Novos visitantes diários no período                      | Informa o número diário de novos visitantes (primeira visita à loja), para o período informado. Pode-se contabilizar apenas os acessos com pedidos.                                                                                                             | Relatório estatístico  |
+| 86       | Novos visitantes mensais no período                      | Informa o número mensal de novos visitantes (primeira visita à loja), para o período informado. Pode-se contabilizar apenas os acessos com pedidos.                                                                                                             | Relatório estatístico  |
+| 381      | Ordenação das buscas de produtos no período              | Informa a quantidade de buscas por produtos, em cada ordenação possível. Pode-se indicar o período, o termo ou trazer apenas as buscas detalhadas.                                                                                                              | Relatório de produtos  |
+| 365      | Páginas visitadas por sessão                             | Informa as páginas visitadas em cada sessão. Pode-se pesquisar pelo IP, pelo período, tipo de acesso e pelo <i>user agent</i> do visitante (navegador e sistema operacional).                                                                                   | Relatório estatístico  |
+| 37       | Pedidos agrupados por estado                             | Pedidos agrupados por estado, no período informado. Inclui valor sem frete dos pedidos.                                                                                                                                                                         | Relatório de pedidos   |
+| 102      | Pedidos feitos a partir de parceiro                      | Pedidos obtidos a partir de link de parceiro, realizados no período informado. Inclui valor sem frete dos pedidos e o valor comissionado. Pode-se indicar método de pagamento e situação atual.                                                                 | Relatório de parceiros |
+| 220      | Pedidos feitos a partir de um parceiro                   | Pedidos obtidos a partir de link de parceiro especificado, realizados no período informado. Inclui valor sem frete dos pedidos e o valor comissionado. Pode-se indicar o situação atual.                                                                        | Relatório de pedidos   |
+| 207      | Pedidos feitos com cartão                                | Pedidos feitos com cartões de crédito, realizados no período informado. Inclui valor com frete incluso e número de parcelas. Pode-se indicar o tipo de cartão e status atual.                                                                                   | Relatório de pedidos   |
+| 230      | Pedidos feitos com cartão autorizados via Cobre Bem      | Pedidos feitos com cartões de crédito autorizados através do Aprova Fácil. Pode-se indicar o tipo de cartão, o status atual, o número da transação e da autorização informados pela Cobre Bem.                                                                  | Relatório de pedidos   |
+| 261      | Pedidos por faixa de total                               | Lista os pedidos por faixa de preço total, incluindo o frete. Pode-se filtrar por status e forma de pagamento.                                                                                                                                                  | Relatório de pedidos   |
+| 243      | Pedidos por localidade de envio                          | Lista os pedidos com envio para a localidade indicada, realizados no período informado. Pode-se filtrar por status. São utilizadas as datas de realização de cada pedido.                                                                                       | Relatório de pedidos   |
+| 260      | Pedidos por preço, frete e total                         | Lista os pedidos de acordo com o preço do pedido, o frete e/ou o total (preço+frete) informados. Pode-se filtrar por status.                                                                                                                                    | Relatório de pedidos   |
+| 159      | Pedidos por termos de busca                              | Lista os pedidos no período informado, a partir de diversos critérios de busca: nome, endereço, CEP, cidade, país, telefone, mensagem, obs curta, obj SEDEX, etc.                                                                                               | Relatório de pedidos   |
+| 290      | Pedidos remetidos no período                             | Lista todos os detalhes de clientes e pedidos remetidos no período informado. Pode-se restringir pela data de entrega, período da última alteração, forma de pagamento, período da realização do pedido e período da entrega.                                   | Relatório de pedidos   |
+| 69       | Principais configurações de sistema dos visitantes       | Relaciona os principais browsers e sistemas operacionais utilizados pelos visitantes (USER AGENT)                                                                                                                                                               | Relatório estatístico  |
+| 47       | Principais origens de pedidos no período                 | Informa as principais URLs de onde vieram os pedidos da loja, no período informado. Clique na URL para visitar.                                                                                                                                                 | Relatório estatístico  |
+| 41       | Principais origens de visitantes no período              | Informa as principais URLs de onde vieram os visitantes da loja, no período informado. Clique na URL para visitar.                                                                                                                                              | Relatório estatístico  |
+| 482      | Principais URLs de entrada no período                    | Relaciona as URLs das principais <i>landing pages</i> dos visitantes da loja. Pode-se filtrar pelo período, por trecho da URL e pelo tipo de acesso.                                                                                                            | Relatório estatístico  |
+| 89       | Produtos cadastrados                                     | Lista os produtos cadastrados na loja. Pode-se solicitar apenas produtos disponíveis, não disponíveis, em lançamento e/ou em promoção. Pode-se filtrar pelo período da última alteração e pela API Flag, que é utilizada por sistemas ERP integrados.           | Relatório de produtos  |
+| 198      | Produtos cadastrados por imagem                          | Listagem com todos os produtos cadastrados, obtidos a partir do nome da imagem principal. Pode-se solicitar apenas produtos-pai ou sub-produtos. Deixe o campo Imagem em branco para produtos sem imagem.                                                       | Relatório de produtos  |
+| 285      | Produtos cadastrados por peso                            | Listagem com todos os produtos cadastrados com determinado peso. Pode-se solicitar apenas produtos disponíveis, por estoque (a partir de) e por preço (a partir de). Útil para listar produtos com peso zero ou não informados.                                 | Relatório de produtos  |
+| 527      | Produtos cadastrados por URL personalizada e Title       | Lista os produtos cadastrados na loja e seus respectivos Title e URLs personalizadas. Pode-se solicitar apenas produtos disponíveis ou não disponíveis. Pode-se filtrar pelo período da última alteração, pelo Title, URL personalizada e nome do produto.      | Relatório de produtos  |
+| 291      | Produtos com mais do que o estoque informado             | Informa os produtos disponíveis que atingiram quantidades superiores ao estoque informado. Indica também o custo de cada produto e o valor total em estoque.                                                                                                    | Relatório de produtos  |
+| 45       | Produtos com menos do que o estoque mínimo               | Informa todos os produtos que atingiram quantidades inferiores ao estoque mínimo de cada produto. Informa o débito do estoque em quantidade de produtos e custo por produto. Lista somente os produtos disponíveis.                                             | Relatório de produtos  |
+| 403      | Produtos com menos do que o estoque mínimo (todos)       | Informa todos os produtos que atingiram quantidades inferiores ao estoque mínimo de cada produto. Informa o débito do estoque em quantidade de produtos e custo por produto. Inclui os produtos não disponíveis.                                                | Relatório de produtos  |
+| 46       | Produtos disponíveis                                     | Listagem com todos os produtos disponíveis. Pode-se solicitar apenas produtos em lançamento, em promoção e/ou em destaque. É possível definir a ordem de apresentação.                                                                                          | Relatório de produtos  |
+| 80       | Produtos em cestas abandonadas                           | Produtos colocados em cestas de pedidos que não foram finalizados. Pode-se informar o período e a quantidade de produtos. Para restringir a um produto, informe seu ID, que é exibido no topo de sua ficha no site administrativo.                              | Relatório de produtos  |
+| 58       | Produtos em promoção no momento                          | Relaciona as promoções em vigor na loja, ordenando os produtos por quantidade em estoque. Pode-se informar o parceiro que tem exclusividade na promoção.                                                                                                        | Relatório de produtos  |
+| 59       | Produtos em promoção no período                          | Relaciona as promoções do período indicado, ordenando os produtos por quantidade em estoque. Pode-se informar o parceiro que tem exclusividade na promoção.                                                                                                     | Relatório de produtos  |
+| 107      | Produtos mais vendidos por margem                        | Lista os produtos mais vendidos na loja no período informado, ordenados por margem de lucro (diferença entre preço e custo dos produtos). Pode-se informar o método de pagamento.                                                                               | Relatório de pedidos   |
+| 55       | Produtos mais vendidos por preço                         | Lista os produtos mais vendidos na loja no período informado, ordenados por preço. Pode-se informar o método de pagamento.                                                                                                                                      | Relatório de pedidos   |
+| 104      | Produtos mais vendidos por preço a partir de parceiro    | Lista os produtos mais vendidos a partir de link com parceiro, no período informado, ordenados por preço. Calcula o valor comissionado. Pode-se informar o método de pagamento.                                                                                 | Relatório de parceiros |
+| 221      | Produtos mais vendidos por preço a partir de um parceiro | Lista os produtos mais vendidos a partir de link com determinado parceiro, no período informado, ordenados por preço. Calcula o valor comissionado.                                                                                                             | Relatório de pedidos   |
+| 54       | Produtos mais vendidos por qtd                           | Lista os produtos mais vendidos na loja no período informado, ordenados por quantidade. Pode-se informar o método de pagamento.                                                                                                                                 | Relatório de pedidos   |
+| 103      | Produtos mais vendidos por qtd a partir de parceiro      | Lista os produtos mais vendidos a partir de link com parceiro, no período informado, ordenados por quantidade. Calcula o valor comissionado. Pode-se informar o método de pagamento.                                                                            | Relatório de parceiros |
+| 222      | Produtos mais vendidos por qtd a partir de um parceiro   | Lista os produtos mais vendidos a partir de link com determinado parceiro, no período informado, ordenados por quantidade. Calcula o valor comissionado.                                                                                                        | Relatório de pedidos   |
+| 108      | Produtos menos vendidos por margem                       | Lista os produtos menos vendidos na loja no período informado, ordenados por margem de lucro (diferença entre preço e custo dos produtos). Pode-se informar o método de pagamento.                                                                              | Relatório de pedidos   |
+| 56       | Produtos menos vendidos por preço                        | Lista os produtos menos vendidos na loja no período informado, ordenados por preço. Pode-se informar o método de pagamento.                                                                                                                                     | Relatório de pedidos   |
+| 57       | Produtos menos vendidos por qtd                          | Lista os produtos menos vendidos na loja no período informado, ordenados por quantidade. Pode-se informar o método de pagamento.                                                                                                                                | Relatório de pedidos   |
+| 460      | Produtos por código de barras                            | Listagem com os produtos que contenham um determinado código de barras e/ou código de fabricante (MPN). Pode-se exibir apenas produtos disponíveis ou não disponíveis.                                                                                          | Relatório de produtos  |
+| 30       | Produtos que atingiram estoque informado                 | Informa todos os produtos que atingiram determinada quantidade em estoque (ou menos).                                                                                                                                                                           | Relatório de produtos  |
+| 93       | Produtos remetidos                                       | Listagem de produtos indicando quantidades em estoque e quantidades remetidas. Pode-se solicitar apenas produtos disponíveis, em lançamento, em promoção e/ou em destaque de capa. Pode-se filtrar pela data do pedido.                                         | Relatório de produtos  |
+| 502      | Quantidade de clientes por grupo                         | Informa a quantidade de clientes em cada grupo. Pode-se filtrar pelo período de cadastro do cliente e listar apenas os clientes que desejam receber e-mail marketing (opt-in).                                                                                  | Relatório de pedidos   |
+| 490      | Quantidade de operações de NFe via API                   | Informa a quantidade disponível de operações de NFe (ex: emissão), de acordo com o saldo atual da loja. Utilizado pela API de integração antes de cada operação não gratuita.                                                                                   | Relatório de pedidos   |
+| 404      | Quantidade de produtos cadastrados                       | Informa o número de produtos cadastrados, incluindo a quantidade de produtos pai e de sub-produtos. Pode-se contabilizar apenas os disponíveis, com pelo menos determinado estoque e no intervalo de preço desejado.                                            | Relatório de produtos  |
+| 42       | Situação atual dos pedidos por status                    | Gera gráfico com situação atual dos pedidos, informando total sem frete, frete e quantidade de pedidos por status. É possível também informar o período para verificar situação passada e filtrar por observação curta.                                         | Relatório de pedidos   |
+| 130      | Sorteio de clientes com pedidos feito no período         | Permite sorteio de clientes com pedidos aprovados, no período informado. Útil para sorteios de brindes promocionais da loja.                                                                                                                                    | Relatório de pedidos   |
+| 284      | Tabela de frete da loja por CEP                          | Lista as faixas de CEP e respectivos valores de frete, por faixa de peso. Informa também o valor de frete fixo (ou de kg excedente) de cada faixa. Somente para lojas com tabela própria de frete por CEP.                                                      | Relatório de pedidos   |
+| 401      | Tabela de frete da loja por faixa de CEP                 | Lista as faixas de CEP e respectivos valores de frete, por faixa de peso. Informa também o valor de frete fixo (ou de kg excedente) de cada faixa. Somente para lojas com tabela própria de frete por CEP.                                                      | Relatório de pedidos   |
+| 241      | Tabela de frete da loja por localidade                   | Lista todas as localidades de envio e respectivos valores de frete, por faixa de peso. Informa também o valor de frete fixo (ou de kg excedente) de cada localidade. Somente para lojas com tabela própria de frete por localidade.                             | Relatório de pedidos   |
+| 82       | Tempo médio diário de atendimento aos pedidos            | Mostra o tempo médio diário que a equipe de atendimento da loja leva para atender a pedidos, no período informado. Pode-se informar o método de pagamento e escolher em dias, horas ou minutos.                                                                 | Relatório estatístico  |
+| 78       | Tempo médio diário de permanência na loja                | Média diária de permanência na loja, no período informado, em minutos. Pode-se contabilizar apenas os acessos com pedidos, indicando seu status.                                                                                                                | Relatório estatístico  |
+| 83       | Tempo médio mensal de atendimento aos pedidos            | Mostra o tempo médio mensal que a equipe de atendimento da loja leva para atender a pedidos, no período informado. Pode-se informar o método de pagamento e escolher em dias, horas ou minutos.                                                                 | Relatório estatístico  |
+| 79       | Tempo médio mensal de permanência na loja                | Média mensal de permanência na loja, no período informado, em minutos. Pode-se contabilizar apenas os acessos com pedidos, indicando seu status.                                                                                                                | Relatório estatístico  |
+| 76       | Ticket médio diário no período                           | Mostra o valor médio diário de pedidos, no período informado. Pode-se informar o método de pagamento e o status.                                                                                                                                                | Relatório especial     |
+| 77       | Ticket médio mensal no período                           | Mostra o valor médio mensal de pedidos, no período informado. Pode-se informar o método de pagamento e o status.                                                                                                                                                | Relatório especial     |
+| 101      | Totais diários de pedidos a partir de parceiro           | Totalizações de pedidos obtidos a partir de link de parceiro, feitos no período informado, selecionados por status e agrupados por dia. Calcula o valor comissionado. Pode-se informar o meio de pagamento.                                                     | Relatório de parceiros |
+| 223      | Totais diários de pedidos a partir de um parceiro        | Totalizações de pedidos obtidos a partir de link de parceiro específico, feitos no período informado, selecionados por status e agrupados por dia. Calcula o valor comissionado. Pode-se informar o meio de pagamento.                                          | Relatório especial     |
+| 60       | Totais diários de pedidos no período                     | Totalizações de pedidos feitos no período informado, selecionados por status e agrupados por dia. Pode-se informar o meio de pagamento.                                                                                                                         | Relatório especial     |
+| 100      | Totais diários de vendas a partir de parceiro            | Totalizações de vendas obtidas a partir de link de parceiro, feitas no período informado, selecionados por status e agrupados por dia. Calcula o valor comissionado. Pode-se informar o meio de pagamento.                                                      | Relatório de parceiros |
+| 224      | Totais diários de vendas a partir de um parceiro         | Totalizações de vendas obtidas a partir de link de determinado parceiro, feitas no período informado, selecionados por status e agrupados por dia. Calcula o valor comissionado. Pode-se informar o meio de pagamento.                                          | Relatório especial     |
+| 61       | Totais diários de vendas no período                      | Totalizações de vendas feitas no período informado, selecionados por status e agrupados por dia. Pode-se informar o meio de pagamento. São utilizadas as datas de realização de cada pedido na loja.                                                            | Relatório especial     |
+| 99       | Totais mensais de pedidos a partir de parceiro           | Totalizações de pedidos obtidos a partir de parceiro, feitos no período informado, selecionados por status e agrupados por mês. Calcula o valor comissionado. Pode-se informar o meio de pagamento.                                                             | Relatório de parceiros |
+| 225      | Totais mensais de pedidos a partir de um parceiro        | Totalizações de pedidos obtidos a partir de determinado parceiro, feitos no período informado, selecionados por status e agrupados por mês. Calcula o valor comissionado.                                                                                       | Relatório especial     |
+| 34       | Totais mensais de pedidos no período                     | Totalizações de pedidos feitos no período informado, selecionados por status e agrupados por mês. São utilizadas as datas de realização de cada pedido.                                                                                                         | Relatório especial     |
+| 98       | Totais mensais de vendas a partir de parceiro            | Exibe gráfico da evolução de vendas obtidas a partir de link de parceiro, mês a mês. Calcula o valor comissionado. Pode-se informar o meio de pagamento.                                                                                                        | Relatório de parceiros |
+| 226      | Totais mensais de vendas a partir de um parceiro         | Exibe gráfico da evolução de vendas obtidas a partir de link de determinado parceiro, mês a mês. Calcula o valor comissionado. Pode-se informar o meio de pagamento.                                                                                            | Relatório especial     |
+| 50       | Totais mensais de vendas no período                      | Exibe gráfico da evolução de vendas da loja, mês a mês. Pode-se informar o meio de pagamento. São utilizadas as datas de realização de cada pedido na loja.                                                                                                     | Relatório especial     |
+| 193      | Total de acessos exclusivos a produtos                   | Informa o número de pageviews de cada produto, para páginas que listem apenas o produto (ex: ver detalhes). Pode-se solicitar apenas produtos de uma categoria ou por nome, referência ou descrição.                                                            | Relatório de produtos  |
+| 210      | Total de acessos por página no momento                   | Informa os totais de acessos (page views) de cada página, no momento. Pode-se contabilizar apenas os acessos com pedidos.                                                                                                                                       | Relatório estatístico  |
+| 65       | Total de acessos por página no período                   | Informa os totais de acessos (page views) de cada página, no período informado. Pode-se contabilizar apenas os acessos com pedidos.                                                                                                                             | Relatório estatístico  |
+| 92       | Visitantes no momento                                    | Exibe informações de acesso dos visitantes que estão na loja no momento. Pode-se selecionar o parceiro e o tipo de acesso. Marque o campo <i>Com erro 404</i> para listar somente os acessos onde este erro ocorreu.                                            | Relatório estatístico  |
+| 199      | Visitantes no momento a partir de parceiro               | Exibe informações de acesso dos visitantes que estão na loja no momento provenientes do parceiro.                                                                                                                                                               | Relatório de parceiros |
+| 227      | Visitantes no momento a partir de um parceiro            | Exibe informações de acesso dos visitantes que estão na loja no momento provenientes de determinado parceiro.                                                                                                                                                   | Relatório estatístico  |
+| 91       | Visitantes no período                                    | Exibe informações de acesso dos visitantes que estiveram na loja no período indicado. Pode-se pesquisar pelo ID da sessão e o tipo de acesso. Marque o campo <i>Com erro 404</i> para listar somente os acessos onde este erro ocorreu.                         | Relatório estatístico  |
+| 202      | Visitantes no período a partir de parceiro               | Exibe informações de acesso dos visitantes provenientes do parceiro, no período informado.                                                                                                                                                                      | Relatório de parceiros |
