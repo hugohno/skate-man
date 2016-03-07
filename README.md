@@ -33,11 +33,11 @@ NomeProd | varchar(100) | Nome do produto
 Peso | real | Peso do produto. A unidade (gramas ou quilogramas) é definida na página Dados da loja. É possível consultar a unidade de peso pelo relatório "Dados da loja para consultas via API" [ObjectID 510]
 Descricao | varchar(200) | Descrição curta do produto
 DescrLonga | varchar(1024) | Descrição longa do produto
-DescrHTM | varchar(25) | Indica o nome do arquivo HTML contendo descrição adicional do produto. O conteúdo do arquivo HTM seráincluído na posição da tag especial <DescrHTM>, caso esta tag exista no arquivo personalizado de exibição do layout de produtos na loja (EstiloProduto.htm)
+DescrHTM | varchar(25) | Indica o nome do arquivo HTML contendo descrição adicional do produto. O conteúdo do arquivo HTM seráincluído na posição da tag especial &lt;DescrHTM&gt;, caso esta tag exista no arquivo personalizado de exibição do layout de produtos na loja (EstiloProduto.htm)
 DescrURL | varchar(100) | URL para mais detalhes do produto
 MetaKeywordsProd | varchar(200) | Palavras-chave (keywords) específicas para o produto. Os termos devemser separados por vírgula. Exemplo: nokia,celular com wi-fi,mp3,rede 3G,GPSSão inseridas em "meta tag keyword", no código fonte da loja.
-TitleProd | varchar(100) | Informe neste campo o conteúdo da tag <title> que será inserido no código fonte da página de detalhe do produto. O objetivo principal é melhorar o posicionamento (ranking) nas pesquisas feitas no Google e demais sites de busca (SEO). 
-MetaDescriptionProd | varchar(150) | Informe neste campo o conteúdo da tag <meta description> que será inserido no código fonte da página de detalhe do produto. O objetivo principal é melhorar o posicionamento (ranking) nas pesquisas feitas no Google e demais sites de busca (SEO).
+TitleProd | varchar(100) | Informe neste campo o conteúdo da tag &lt;title&gt; que será inserido no código fonte da página de detalhe do produto. O objetivo principal é melhorar o posicionamento (ranking) nas pesquisas feitas no Google e demais sites de busca (SEO). 
+MetaDescriptionProd | varchar(150) | Informe neste campo o conteúdo da tag &lt;meta description&gt; que será inserido no código fonte da página de detalhe do produto. O objetivo principal é melhorar o posicionamento (ranking) nas pesquisas feitas no Google e demais sites de busca (SEO).
 URLProd | varchar(150) | Informe neste campo a parte final da URL personalizada da página de detalhes do produto, para otimização do seu posicionamento no Google e demais sites de busca (SEO). Este termo será exibido após a barra / no endereço da página. Por exemplo, ao preencher este campo com porta-lapis, a URL personalizada deste produto será www.minhaloja.com.br/porta-lapis. Utilize somente caracteres alfanuméricos, sem acentos ou espaços, que devem ser substituídos por hifens. Este campo será utilizado somente se a opção URLs personalizadas da página Dados da loja estiver marcada. Execute o utilitário Define URLs personalizadas de produtos para preencher em todos os produtos.
 URLTarget | bit | Se TRUE, URL do campo DescrURL Será exibida em uma nova janela
 Estoque | smallint | Quantidade de itens do produto em estoque
@@ -55,7 +55,7 @@ IDParceiroProd | int | Informe o ID do parceiro que terá exclusividade para o p
 MaxParcelasProd | tinyint | Número máximo de parcelas para pedidos que incluam este produto.
 XMLParcelasProd | tinyint | Indica o número de parcelas utilizadas para exibir o parcelamento na página que lista os produtos em XML (XMLProdutos.asp). A lista de produtos em XML é utilizado pelos portais de comparação de preços e shopping virtuais, para capturar os produtos da loja.
 Lancamento | bit | Se TRUE, indica que o produto é lançamento
-EmDestaque | bit | Se TRUE, indica que o produto tem destaque no layout da loja. Ver tag <prod>
+EmDestaque | bit | Se TRUE, indica que o produto tem destaque no layout da loja. Ver tag &lt;prod&gt;
 ImagemProd | varchar(200) | Nome do arquivo com a imagem principal do produto com extensão JPG, PNG, GIF ou SWF
 ImagemDet | varchar(200) | Nome do arquivo com a imagem de detalhe do produto com extensão JPG, PNG, GIF ou SWF
 ImagemAmp | varchar(200) | Nome do arquivo com a imagem ampliada do produto com extensão JPG, PNG, GIF ou SWF
